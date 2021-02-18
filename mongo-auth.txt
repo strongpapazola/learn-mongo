@@ -1,0 +1,14 @@
+docker run -d -p 27017:27017 -v data:/data/db mongo
+
+use admin
+db.createUser(
+  {
+    user: "myUserAdmin",
+    pwd: "password", // or cleartext password
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+)
+
+docker container stop prevous
+docker run -d -p 27017:27017 -v data:/data/db mongo --auth
+
