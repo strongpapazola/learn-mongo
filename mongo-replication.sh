@@ -16,6 +16,7 @@ if [ "$CONFIRM" == "n" ];then
 fi
 
 echo -e "$PROCESS Creating Docker Instanse"
+docker pull mongo:latest
 docker run -d -p $PORT1:27017 -v mongo1:/data/db --name mongo1 mongo mongod --replSet my-mongo-set
 docker run -d -p $PORT2:27017 -v mongo2:/data/db --name mongo2 mongo mongod --replSet my-mongo-set
 docker run -d -p $PORT3:27017 -v mongo3:/data/db --name mongo3 mongo mongod --replSet my-mongo-set
@@ -40,6 +41,9 @@ echo -e "$SUCCESS Docker MongoDB Instance Cleared"
 echo -e "$PROCESS Cleaning Docker MongoDB Data Volume"
 rm -rf mongo1 mongo2 mongo3
 echo -e "$SUCCESS Docker MongoDB Data Volume Cleared"
+echo -e "$PROCESS Restarting Docker"
+service docker restart
+echo -e "$SUCCESS Docker Restarted"
 }
 
 
